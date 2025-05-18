@@ -1,32 +1,22 @@
 #include <windows.h>
 #include <stdio.h>
+#include <fltuser.h> // Requires WDK
 
-typedef void (*PFN_UNLOAD)();
+#pragma comment(lib, "FltLib.lib")
 
 int main() {
-    // Load the Sysmon driver DLL
-    HMODULE hSysmonDrv = LoadLibraryA("sysmondrv");
-    if (!hSysmonDrv) {
-        printf("Failed to load sysmondrv. Error: %lu\n", GetLastError());
-        return 1;
+    // Print current working directory for debugging
+    char cwd[MAX_PATH];
+    if (GetCurrentDirectoryA(MAX_PATH, cwd)) {
+        printf("Current working directory: %s\n", cwd);
     }
-    printf("Loaded sysmondrv at 0x%p\n", hSysmonDrv);
 
-    // Get the address of the unload function
-    PFN_UNLOAD pfnUnload = (PFN_UNLOAD)GetProcAddress(hSysmonDrv, "DriverUnload");
-    if (!pfnUnload) {
-        printf("Failed to get address of DriverUnload. Error: %lu\n", GetLastError());
-        FreeLibrary(hSysmonDrv);
-        return 1;
+    HRESULT hr = FilterUnload(L"SysmonDrv");
+    if (SUCCEEDED(hr)) {
+        printf("SysmonDrv minifilter unloaded successfully.\n");
+    } else {
+        printf("Failed to unload SysmonDrv minifilter. HRESULT: 0x%08lx\n", hr);
     }
-    printf("Address of DriverUnload: 0x%p\n", pfnUnload);
-
-    // Call the unload function
-    printf("Calling DriverUnload...\n");
-    pfnUnload();
-    printf("DriverUnload called.\n");
-
-    FreeLibrary(hSysmonDrv);
 
     return 0;
 }
