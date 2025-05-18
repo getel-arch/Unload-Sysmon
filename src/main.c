@@ -44,12 +44,6 @@ int main() {
         return 1;
     }
 
-    // Print current working directory for debugging
-    char cwd[MAX_PATH];
-    if (GetCurrentDirectoryA(MAX_PATH, cwd)) {
-        printf("Current working directory: %s\n", cwd);
-    }
-
     // Enable SeLoadDriverPrivilege
     if (!EnablePrivilege(L"SeLoadDriverPrivilege")) {
         printf("Warning: Failed to enable SeLoadDriverPrivilege.\n");
