@@ -46,5 +46,3 @@ if ($hr -eq 0) {
         Write-Host "A required privilege is not held. Please run this script as Administrator."
     }
 }
-
-exit 0
