@@ -35,7 +35,7 @@ func enableSeLoadDriverPrivilege() error {
 func isAdmin() bool {
 	var sid *windows.SID
 	// WinBuiltinAdministratorsSid = 26
-	sid, _ = windows.CreateWellKnownSid(windows.WinBuiltinAdministratorsSid, nil)
+	sid, _ = windows.CreateWellKnownSid(windows.WinBuiltinAdministratorsSid)
 	token := windows.Token(0)
 	member, _ := token.IsMember(sid)
 	return member
