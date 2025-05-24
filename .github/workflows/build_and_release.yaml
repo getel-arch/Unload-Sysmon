@@ -34,7 +34,7 @@ jobs:
 
     - name: Compile Go Binary
       run: |
-        go build -o .\output\unload_sysmon_go_x64.exe .\cmd\unload-sysmon\main.go
+        go build -ldflags="-s -w" -o .\output\unload_sysmon_go_x64.exe .\cmd\unload-sysmon\main.go
 
     - name: Read Version
       run: |
