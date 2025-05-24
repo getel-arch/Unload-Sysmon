@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
-#include <fltuser.h> // Requires WDK
+#include <fltuser.h>
 
 #pragma comment(lib, "FltLib.lib")
 

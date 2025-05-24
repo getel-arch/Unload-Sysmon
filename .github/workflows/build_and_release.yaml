@@ -25,6 +25,10 @@ jobs:
     - name: Compile 64bit Binary
       run: gcc .\src\main.c -o .\output\unload_sysmon_x64.exe -s -m64 -lfltlib
 
+    - name: Compile Go Binary
+      run: |
+        go build -o .\output\unload_sysmon_go_x64.exe .\cmd\unload-sysmon\main.go
+
     - name: Read Version
       run: |
         $version = Get-Content VERSION
