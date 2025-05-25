@@ -6,21 +6,21 @@ if (-not $isAdmin) {
     Write-Error "Error: This script must be run as Administrator."
 } else {
 	$definition = @"
-	using System;
-	using System.Runtime.InteropServices;
-	public static class WinAPI {
-	    [DllImport("ntdll.dll", SetLastError = true)]
-	    public static extern int RtlAdjustPrivilege(
-	        int Privilege,
-	        bool Enable,
-	        bool CurrentThread,
-	        out bool Enabled
-	    );
-	
-	    [DllImport("fltlib.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-	    public static extern int FilterUnload(string lpFilterName);
-	}
-	"@
+using System;
+using System.Runtime.InteropServices;
+public static class WinAPI {
+    [DllImport("ntdll.dll", SetLastError = true)]
+    public static extern int RtlAdjustPrivilege(
+	int Privilege,
+	bool Enable,
+	bool CurrentThread,
+	out bool Enabled
+    );
+
+    [DllImport("fltlib.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    public static extern int FilterUnload(string lpFilterName);
+}
+"@
 	Add-Type -TypeDefinition $definition
 	
 	# Enable SeLoadDriverPrivilege (constant 10)
